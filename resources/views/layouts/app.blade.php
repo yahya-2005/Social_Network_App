@@ -23,7 +23,7 @@
             <a href="/posts">Posts</a>
             @if (session('user_id')){
                 <span>Hy {{ session('user_name') }}</span>
-                <a href ='#'>New Posts</a>
+                <a href ='/posts/create'>New Posts</a>
                 <a href ='/logout'>Logout</a>
                 
             }

@@ -12,4 +12,7 @@ class User extends Model
     public function posts(){
         return $this->hasMany(Post::class);
     }
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
 }
