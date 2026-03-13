@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mon Réseau Social</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>my social media app</title>
     <style>
         body { font-family: Arial; margin: 0; padding: 20px; background: #f0f2f5; }
         .container { max-width: 800px; margin: auto; }
@@ -19,43 +16,29 @@
 <body>
     <div class="container">
         <div class="nav">
-            <a href="/">Home</a>
+            <a href="/">Accueil</a>
             <a href="/posts">Posts</a>
-            @if (session('user_id')){
-                <span>Hy {{ session('user_name') }}</span>
-                <a href ='/posts/create'>New Posts</a>
-                <a href ='/logout'>Logout</a>
-                
-            }
+            @if(session('user_id'))
+                <span>Bonjour {{ session('user_name') }}</span>
+                <a href="/posts/create">Nouveau post</a>
+                <a href="/logout">Déconnexion</a>
             @else
-            
-            
-            <a href="/login">Connexion</a>
+                <a href="/login">Connexion</a>
                 <a href="/register">Inscription</a>
-
             @endif
         </div>
-        @if (session('success'))
-
-<div class="alert alert-success">{{ session('success') }}</div>
-            
+        
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-
-        @if (session('error'))
-
-
-        <div class="alert alert-error">{{ session('error') }}</div>
-            
+        
+        @if(session('error'))
+            <div class="alert alert-error">{{ session('error') }}</div>
         @endif
-
+        
         @yield('content')
     </div>
-
-
-
-      @yield('scripts')
-
-
-      
+    
+    @yield('scripts')
 </body>
 </html>

@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-
-    public function like($postId)
+    // Liker un post
+    public function like(Request $request, $postId)
     {
         $userId = session('user_id');
         
-        
+        // Vérifier si déjà liké
         $existingLike = null;
         $likes = Like::where('post_id', $postId)->get();
         
@@ -25,11 +25,11 @@ class LikeController extends Controller
         }
         
         if ($existingLike) {
-            
+            // Déjà liké, on supprime le like
             $existingLike->delete();
             $liked = false;
         } else {
-            
+            // Pas encore liké, on crée le like
             $like = new Like();
             $like->user_id = $userId;
             $like->post_id = $postId;
@@ -37,13 +37,14 @@ class LikeController extends Controller
             $liked = true;
         }
         
-       
+        // Compter les likes
         $post = Post::find($postId);
         $likesCount = 0;
         foreach ($post->likes as $like) {
             $likesCount++;
         }
         
+        // Vérifier si c'est une requête AJAX
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,

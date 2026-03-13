@@ -1,87 +1,88 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-   public function showR(){
-    return view('auth.register');
-   }
-   public function register(Request $req){
-    $name = $req->input('name') ;
-    $email = $req->input('email') ;
-    $password = $req->input('password') ;
-    if(empty($name) || empty($email) || empty($password)){
-        return back()->with('error','all fields are required');
+    // Afficher le formulaire d'inscription
+    public function showRegister()
+    {
+        return view('auth.register');
     }
-    
-    
-    
-    
-    
-    
-    
-    $existingUser = null;
-    $users =User::all();
-    foreach($users as $user){
-        if($user->email == $email){
-            $existingUser  = $user;
-            break;
+
+    // Traiter l'inscription
+    public function register(Request $request)
+    {
+        // Validation simple
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        
+        if (empty($name) || empty($email) || empty($password)) {
+            return back()->with('error', 'Tous les champs sont obligatoires');
         }
-    }
-      
-    
-    
-    
-    if ($existingUser) {
-            return back()->with('error', 'this email address is already in use');
+        
+        // Vérifier si l'email existe déjà
+        $existingUser = null;
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->email == $email) {
+                $existingUser = $user;
+                break;
+            }
         }
-        $user = new user();
-            $user->name = $name;
+        
+        if ($existingUser) {
+            return back()->with('error', 'Cet email est déjà utilisé');
+        }
+        
+        // Créer l'utilisateur
+        $user = new User();
+        $user->name = $name;
         $user->email = $email;
-        $user->password = password_hash($password,PASSWORD_DEFAULT);
-            $user->save();
-        return redirect('/login')->with('success', 'account successfully created'); 
-   }
+        $user->password = password_hash($password, PASSWORD_DEFAULT); // Hash simple
+        $user->save();
+        
+        return redirect('/login')->with('success', 'Compte créé avec succès');
+    }
 
-
-    public function showL(){
+    // Afficher le formulaire de connexion
+    public function showLogin()
+    {
         return view('auth.login');
     }
 
-
-
-    public function login(Request $req){
-
-    $email = $req->input('email');
-    $password = $req->input('password');
-
-
-    $foundUser = null ;
-
-    $users = User::all();
-    
-    
-    foreach ($users as $user) {
+    // Traiter la connexion
+    public function login(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
+        
+        // Chercher l'utilisateur
+        $foundUser = null;
+        $users = User::all();
+        foreach ($users as $user) {
             if ($user->email == $email) {
-        $foundUser = $user;
+                $foundUser = $user;
                 break;
             }
-    };
-    
-
-
-if($foundUser && password_verify($password , $foundUser -> password)){
-    session(['user_id' => $foundUser->id]);
-    session(['user_name' => $foundUser->name]);
-
-    return redirect('/posts');
-}
-   return back()->with('error', 'incorrect email or password');
-
+        }
+        
+        if ($foundUser && password_verify($password, $foundUser->password)) {
+            // Stocker l'ID dans la session
+            session(['user_id' => $foundUser->id]);
+            session(['user_name' => $foundUser->name]);
+            
+            return redirect('/posts');
+        }
+        
+        return back()->with('error', 'Email ou mot de passe incorrect');
     }
+
+    // Déconnexion
     public function logout()
     {
         session()->forget('user_id');
