@@ -34,5 +34,8 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
     Route::post('/posts/{id}', [PostController::class, 'update']);
     
     Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+    
+    
+    Route::post('/posts/{id}/like', [LikeController::class, 'like']);
 
 });

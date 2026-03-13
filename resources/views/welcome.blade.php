@@ -2,9 +2,11 @@
 
 @section('content')
     <div style="text-align: center; padding: 50px; background: white; border-radius: 5px;">
-        <h1>Welcome to My Social Network App</h1>
+        <h1>Bienvenue sur Mon Réseau Social</h1>
         
-        
+        <p style="font-size: 18px; margin: 30px 0;">
+            Partagez vos pensées, likez les posts de vos amis!
+        </p>
         
         @if(!session('user_id'))
             <div>
@@ -19,7 +21,8 @@
             </div>
         @else
             <div>
-                <a href="/posts" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 3px;">
+                <a href="/posts" style="background: #007bff; color: white; padding: 10px 20px; 
+                   text-decoration: none; border-radius: 3px;">
                     Voir les posts
                 </a>
             </div>

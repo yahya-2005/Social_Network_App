@@ -15,13 +15,35 @@ public function index(){
 
 
 
-    foreach ($posts as $post) {
+   foreach ($posts as $post) {
+
     $user = User::find($post->user_id);
     $post->author_name = $user ? $user->name : 'Unknown';
-}
 
+    $likes = $post->likes;
+    $post->likesC = 0;
+
+    foreach($likes as $like){
+        $post->likesC++;
+    }
+
+    $userId = session('user_id');
+    $post->like_by_U = false;
+
+    if($userId){
+        foreach($likes as $like){
+            if($like->user_id == $userId){
+                $post->like_by_U = true;
+                break;
+            }
+        }
+    }
+}
 return view('posts.index', ['posts' => $posts]);
 }
+
+    
+
    public function create(){
     return view('posts.create');
    }
@@ -47,6 +69,19 @@ return view('posts.index', ['posts' => $posts]);
     }
      $user = User::find($post->user_id);
         $post->author_name = $name ? $user->name :'Unknown';
+
+
+
+
+
+
+//likes part in show 
+$likes = $post->likes;
+        $post->likes_count = 0;
+        foreach ($likes as $like) {
+            $post->likes_count++;
+        }
+
 
         return view('posts.show', ['post' => $post]);
    }
@@ -120,5 +155,7 @@ return view('posts.index', ['posts' => $posts]);
         
         return redirect('/posts')->with('success', 'Post successfully deleted');
     }
+
+
     
 }
