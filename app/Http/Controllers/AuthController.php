@@ -7,25 +7,37 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    // Afficher le formulaire d'inscription
+ 
+
+
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // Traiter l'inscription
+    
+    
+
+
+
     public function register(Request $request)
     {
-        // Validation simple
+   
+    
+
+
         $name = $request->input('name');
         $email = $request->input('email');
         $password = $request->input('password');
         
         if (empty($name) || empty($email) || empty($password)) {
-            return back()->with('error', 'Tous les champs sont obligatoires');
+            return back()->with('error', 'all fields are required');
         }
         
-        // Vérifier si l'email existe déjà
+       
+
+
+
         $existingUser = null;
         $users = User::all();
         foreach ($users as $user) {
@@ -34,56 +46,76 @@ class AuthController extends Controller
                 break;
             }
         }
+
+        
         
         if ($existingUser) {
-            return back()->with('error', 'Cet email est déjà utilisé');
+            return back()->with('error', 'this email is already used');
         }
-        
-        // Créer l'utilisateur
+    
+
+
+
+
+
         $user = new User();
         $user->name = $name;
         $user->email = $email;
-        $user->password = password_hash($password, PASSWORD_DEFAULT); // Hash simple
+        $user->password = password_hash($password, PASSWORD_DEFAULT); 
         $user->save();
         
-        return redirect('/login')->with('success', 'Compte créé avec succès');
+        return redirect('/login')->with('success', 'account created successfully');
     }
 
-    // Afficher le formulaire de connexion
+    
+
+
+
+
+
+
+
+
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // Traiter la connexion
+
+
+
+
+
+
+
     public function login(Request $request)
     {
         $email = $request->input('email');
         $password = $request->input('password');
         
-        // Chercher l'utilisateur
-        $foundUser = null;
-        $users = User::all();
-        foreach ($users as $user) {
-            if ($user->email == $email) {
-                $foundUser = $user;
-                break;
-            }
-        }
         
-        if ($foundUser && password_verify($password, $foundUser->password)) {
-            // Stocker l'ID dans la session
+
+    $foundUser = null;
+    $users = User::all();
+    foreach ($users as $user) {
+        if ($user->email == $email) {
+                $foundUser = $user;
+           break;
+         }
+ }
+        
+    if ($foundUser && password_verify($password, $foundUser->password)) {
+            
             session(['user_id' => $foundUser->id]);
             session(['user_name' => $foundUser->name]);
             
             return redirect('/posts');
         }
         
-        return back()->with('error', 'Email ou mot de passe incorrect');
+        return back()->with('error', 'Email or password is incorrect');
     }
 
-    // Déconnexion
-    public function logout()
+public function logout()
     {
         session()->forget('user_id');
         session()->forget('user_name');

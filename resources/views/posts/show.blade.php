@@ -5,7 +5,7 @@
         <h1>{{ $post->title }}</h1>
         
         <p style="color: #666; font-size: 14px;">
-            Par {{ $post->author_name }} - {{ $post->created_at }}
+            by {{ $post->author_name }} - {{ $post->created_at }}
         </p>
         
         <div style="margin: 20px 0; line-height: 1.6;">

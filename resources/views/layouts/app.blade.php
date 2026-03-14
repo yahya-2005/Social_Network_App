@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mon Réseau Social</title>
+    <title>my social network</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         body { font-family: Arial; margin: 0; padding: 20px; background: #f0f2f5; }
@@ -16,15 +16,15 @@
 <body>
     <div class="container">
         <div class="nav">
-            <a href="/">Accueil</a>
+            <a href="/">Home</a>
             <a href="/posts">Posts</a>
             @if(session('user_id'))
-                <span>Bonjour {{ session('user_name') }}</span>
-                <a href="/posts/create">Nouveau post</a>
-                <a href="/logout">Déconnexion</a>
+                <span>Hello {{ session('user_name') }}</span>
+                <a href="/posts/create">New Post</a>
+                <a href="/logout">Logout</a>
             @else
-                <a href="/login">Connexion</a>
-                <a href="/register">Inscription</a>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
             @endif
         </div>
         

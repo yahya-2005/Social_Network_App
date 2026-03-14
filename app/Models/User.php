@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable; // Importer ceci
+use Illuminate\Foundation\Auth\User as Authenticatable; 
 
-class User extends Authenticatable // Étendre Authenticatable au lieu de Model
+class User extends Authenticatable 
 {
     protected $fillable = [
         'name', 'email', 'password'
@@ -15,12 +15,18 @@ class User extends Authenticatable // Étendre Authenticatable au lieu de Model
         'password', 'remember_token',
     ];
 
+    
+    
+    
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    public function likes()
+    
+    
+    
+public function likes()
     {
         return $this->hasMany(Like::class);
     }

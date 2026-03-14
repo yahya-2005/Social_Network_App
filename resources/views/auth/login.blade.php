@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Connexion</h1>
+    <h1>login</h1>
     
     <div style="background: white; padding: 20px; border-radius: 5px; max-width: 400px; margin: auto;">
         <form action="/login" method="POST">
@@ -14,19 +14,19 @@
             </div>
             
             <div style="margin-bottom: 15px;">
-                <label for="password" style="display: block; margin-bottom: 5px;">Mot de passe:</label>
+                <label for="password" style="display: block; margin-bottom: 5px;">Password:</label>
                 <input type="password" name="password" id="password" required 
                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px;">
             </div>
             
             <button type="submit" style="background: #007bff; color: white; padding: 10px 20px; 
                     border: none; border-radius: 3px; cursor: pointer;">
-                Se connecter
+                log in
             </button>
         </form>
         
         <p style="margin-top: 15px; text-align: center;">
-            Pas encore de compte? <a href="/register">S'inscrire</a>
+            no account yet? <a href="/register">sign up</a>
         </p>
     </div>
 @endsection

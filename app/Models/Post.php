@@ -20,7 +20,9 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    // Méthode simple pour vérifier si l'utilisateur a liké
+  
+
+
     public function isLikedBy($userId)
     {
         foreach ($this->likes as $like) {
@@ -31,10 +33,17 @@ class Post extends Model
         return false;
     }
 
-    // Compter les likes simplement
-    public function countLikes()
+   
+    
+
+
+
+   
+ public function countLikes()
     {
-        $count = 0;
+        
+    
+    $count = 0;
         foreach ($this->likes as $like) {
             $count++;
         }

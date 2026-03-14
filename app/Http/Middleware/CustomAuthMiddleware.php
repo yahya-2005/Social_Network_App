@@ -8,9 +8,9 @@ class CustomAuthMiddleware
 {
     public function handle($request, Closure $next)
     {
-        // Vérification simple si l'utilisateur est connecté via la session
+        
         if (!session()->has('user_id')) {
-            return redirect('/login')->with('error', 'Vous devez être connecté pour accéder à cette page');
+            return redirect('/login')->with('error', 'you need to log in to access this page');
         }
         
         return $next($request);
